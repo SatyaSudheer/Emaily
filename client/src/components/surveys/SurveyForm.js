@@ -5,10 +5,10 @@ import {Link} from 'react-router-dom';
 import SurveyField from './SurveyField';
 
 const FIELDS = [
-{label: 'Survey Title', name:'title'},
-{label: 'Subject Line', name: 'subject'},
-{label: 'Email Body', name: 'body'},
-{label: 'Recipient List', name: 'emails'}
+{label: 'Survey Title', name:'title', noValueError:'Provide a Survey Title'},
+{label: 'Subject Line', name: 'subject', noValueError:'Provide a Subject Line'},
+{label: 'Email Body', name: 'body', noValueError:'Provide a Email Body'},
+{label: 'Recipient List', name: 'emails', noValueError:'Provide a Recipient List'}
 ];
 
 class SurveyForm extends Component {
@@ -31,6 +31,19 @@ class SurveyForm extends Component {
     }
 }
 
+function validate(values){
+    const errors = {};
+
+    _.each(FIELDS, ({name, noValueError})=>{
+        if(!values[name]){
+            errors[name] = noValueError;
+        }
+    });
+
+    return errors; 
+}
+
 export default reduxForm({
+    validate,
     form: 'surveyForm'
 })(SurveyForm);
