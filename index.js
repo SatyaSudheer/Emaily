@@ -4,6 +4,7 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const bodyparser = require('body-parser');
 const keys = require('./config/keys');
+const path = require("path"); 
 
 require('./models/User');
 require('./models/Survey');
@@ -34,9 +35,6 @@ if(process.env.NODE_ENV === 'production'){
     //like our main.js file or main.css files!
     app.use(express.static('client/build'));
 
-    //Express will server up the index.html file
-    // if it doies't recognize the route 
-    const path = require("path"); 
     app.get('*', (req,res)=>{
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));    
     });
